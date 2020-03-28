@@ -1,5 +1,7 @@
 package _02_File_Encrypt_Decrypt;
 
+import java.io.FileWriter;
+
 import javax.swing.JOptionPane;
 
 public class FileEncryptor {
@@ -31,13 +33,23 @@ public class FileEncryptor {
 		FileEncryptor fe = new FileEncryptor();
 		String encryptedInput = fe.encrypt(input, actualKey);
 
-		System.out.println(encryptedInput);
+		try {
+			FileWriter fw = new FileWriter("src/_02_File_Encrypt_Decrypt/encrypted.txt");
+			
+			fw.write(encryptedInput);
+			fw.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}
 	}
 
-	public String encrypt(String s, int key) {
+	public String encrypt(String s, int k) {
 		String newS = "";
 		int newAscii;
-
+		int key = k%26;
+		
 		for (int i = 0; i < s.length(); i++) {
 			int ascii = (int) s.charAt(i);
 			newAscii = ascii + key;
@@ -46,7 +58,11 @@ public class FileEncryptor {
 				
 				newAscii = ascii + key - 26;
 				newS += (char) newAscii;
-			} else {
+			}else if(s.charAt(i) == ' ') { 
+				newS += " ";
+			}
+			
+			else {
 				newS += (char) newAscii;
 			}
 
