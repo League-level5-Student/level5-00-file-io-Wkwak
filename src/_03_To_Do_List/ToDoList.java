@@ -2,6 +2,9 @@ package _03_To_Do_List;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -81,7 +84,7 @@ public class ToDoList implements ActionListener {
 		if (e.getActionCommand().equals("remove task")) {
 			String remove = JOptionPane.showInputDialog(null, "type in the task to be removed w/o capitals");
 			for (int i = 0; i < arr.size(); i++) {
-				if(arr.get(i).toLowerCase().equals(remove)) {
+				if (arr.get(i).toLowerCase().equals(remove)) {
 					arr.remove(i);
 				}
 			}
@@ -102,8 +105,25 @@ public class ToDoList implements ActionListener {
 			}
 		}
 		if (e.getActionCommand().equals("load list")) {
-			//should load the most recent task list
-			//places the tasks into the array 
+			for (int i = 0; i < arr.size(); i++) {
+				arr.remove(i);
+			}
+			try {
+				BufferedReader br = new BufferedReader(new FileReader("src/_03_To_Do_List/tasks.txt"));
+				String line = br.readLine();
+				while (line != null) {
+					arr.add(line);
+					line = br.readLine();
+				}
+
+				br.close();
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 	}
 }

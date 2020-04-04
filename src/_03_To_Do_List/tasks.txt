@@ -1,2 +1,3 @@
-run
-jog
+eat
+sleep
+dream
